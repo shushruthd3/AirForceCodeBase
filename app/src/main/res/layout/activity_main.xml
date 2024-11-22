@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="400dp">
+<com.google.android.material.card.MaterialCardView
+    android:layout_width="wrap_content"
+app:strokeColor="@android:color/holo_blue_light"
+    app:strokeWidth="2dp"
+    android:layout_margin="20dp"
+    app:cardCornerRadius="20dp"
+    android:elevation="20dp"
+    android:outlineSpotShadowColor="@android:color/holo_orange_light"
+    android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:id="@+id/register_layout"
+            android:layout_height="wrap_content" android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="40dp" android:gravity="center" android:textSize="25dp"
+                android:textColor="@android:color/holo_orange_light"
+                android:layout_gravity="center"
+                android:text="Register the Device."></TextView>
+<EditText
+    android:layout_width="300dp"
+    android:layout_gravity="center"
+        android:layout_margin="80dp"
+    android:focusable="true"
+    android:gravity="center"
+    android:layout_height="50dp"
+    android:id="@+id/url_edit"
+    android:inputType="textUri"
+android:text="http://192.168.29.70:8000/v1/deviceReg"
+    android:hint="Registration URL "
+    tools:ignore="MissingConstraints"></EditText>
+
+    <Button
+        android:layout_width="120dp"
+        android:layout_gravity="center"
+        android:layout_height="80dp"
+        android:id="@+id/click"
+        android:text="Register Device"
+        android:layout_marginBottom="60dp"
+        tools:ignore="MissingConstraints"></Button>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:id="@+id/validate_layout"
+            android:visibility="invisible"
+            android:layout_height="wrap_content" android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:gravity="center" android:textSize="25dp"
+                android:textColor="@android:color/holo_orange_light"
+                android:layout_gravity="center"
+                android:text="Validate the Device."></TextView>
+            <EditText
+                android:layout_width="300dp"
+                android:layout_gravity="center"
+                android:layout_margin="80dp"
+                android:focusable="true"
+                android:gravity="center"
+                android:layout_height="50dp"
+                android:id="@+id/url_edit1"
+                android:inputType="textUri"
+                android:text="http://192.168.29.70:8000/v1/devicevalidate1"
+                android:hint="Provide URL "
+                tools:ignore="MissingConstraints"></EditText>
+
+            <Button
+                android:layout_width="120dp"
+                android:layout_gravity="center"
+                android:layout_height="80dp"
+                android:id="@+id/click1"
+                android:text="Validate Device"
+                android:layout_marginBottom="60dp"
+                tools:ignore="MissingConstraints"></Button>
+        </LinearLayout>
+
+        </LinearLayout>
+</com.google.android.material.card.MaterialCardView>
+        <androidx.cardview.widget.CardView
+            android:layout_width="300dp"
+            android:visibility="invisible"
+            app:cardCornerRadius="20dp"
+            android:id="@+id/cardview"
+            android:layout_gravity="center"
+
+            android:layout_height="100dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:text="Contacting Server Please Wait..."></TextView>
+            <ProgressBar
+                android:layout_width="match_parent"
+                android:layout_gravity="center"
+                android:id="@+id/progress"
+
+                android:layout_height="wrap_content" ></ProgressBar>
+        </androidx.cardview.widget.CardView>
+    </FrameLayout>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        app:strokeWidth="2dp"
+        android:layout_margin="10dp"
+        app:strokeColor="@android:color/holo_red_light"
+        android:layout_height="350dp">
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15dp"
+        android:paddingLeft="10dp"
+        android:layout_margin="10dp"
+        android:layout_gravity="center"
+        android:textStyle="italic"
+        android:id="@+id/android_id"></TextView>
+        <TextView
+            android:layout_width="match_parent"
+            android:background="@color/black"
+            android:id="@+id/sap1"
+            android:visibility="gone"
+            android:text="--------------------------"
+            android:layout_height="1dp"></TextView>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15dp"
+        android:paddingLeft="10dp"
+        android:layout_margin="10dp"
+        android:layout_gravity="center"
+        android:textStyle="italic"
+        android:id="@+id/android_id_cat"></TextView>
+<TextView
+    android:layout_width="match_parent"
+    android:background="@color/black"
+    android:id="@+id/sap2"
+    android:visibility="gone"
+    android:text="--------------------------"
+    android:layout_height="1dp"></TextView>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15dp"
+        android:paddingLeft="10dp"
+        android:layout_margin="10dp"
+        android:layout_gravity="center"
+        android:textStyle="italic"
+        android:id="@+id/android_id_crypt"></TextView>
+    </LinearLayout>
+
+
+</ScrollView>
+    </com.google.android.material.card.MaterialCardView>
+</LinearLayout>
