@@ -114,9 +114,9 @@ textView_id_cot = (TextView)findViewById(R.id.android_id_cat);
                     valueHashed = hashedAfterConcat;
                 object.addProperty("hash", valueHashed);
                 Log.e("Register","Register called 1 ");
-                textView_id_cot.setText("");
-                textView_id.setText("");
                 queryDetails(mEditReg);
+
+
                 Log.e("Register","Register EXITED  ");
 
             }
@@ -124,12 +124,12 @@ textView_id_cot = (TextView)findViewById(R.id.android_id_cat);
         mValidateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                textView_id_cot.setText("");
-                textView_id.setText("");
+                queryDetails(mEditValidate);
+
                 sap1.setVisibility(View.VISIBLE);
                 sap2.setVisibility(View.VISIBLE);
                 Log.e("Register INV","Register INV called 2 ");
-                queryDetails(mEditValidate);
+
                 Log.e("Register INV","Register INV EXITED ");
                // getIMSI(MainActivity.this);
               //  getIMSI(MainActivity.this);
@@ -327,7 +327,7 @@ textView_id_cot = (TextView)findViewById(R.id.android_id_cat);
 
     //Generic method to call Register / Validate the device with the API input details passed over.
     private void queryDetails(EditText regEdit) {
-        Log.e("Register","Register called 2 ");
+        Log.e("Register","Register called 2 "+regEdit.getText().toString());
         InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(regEdit.getWindowToken(), 0);
         String androidId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
@@ -359,20 +359,20 @@ textView_id_cot = (TextView)findViewById(R.id.android_id_cat);
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
-
+        mSaveUrls();
        /* Log.e("HASHED DATA","register data :"+newConcatValue);
         Log.e("HASHED DATA","register data hashed:"+ hashedAfterConcat);*/
         // makeAPICall(textView.getText().toString().trim(),object);
 if(!getRegisterStatus()) {
-    Log.e("Register","Register called 3 ");
-    makeRegisterCall(regEdit.getText().toString(), userReg);
-    mSaveUrls();
+    Log.e("Register","Register called 3 "+mEditReg.getText().toString());
+    makeRegisterCall(mEditReg.getText().toString(), userReg);
+
 }else{
-    Log.e("Register INV","Register INV called Validate ");
+    Log.e("Register INV","Register INV called Validate "+mEditValidate.getText().toString());
     JsonObject object1 = new JsonObject();
     object1.addProperty("hash", hashedAfterConcat);
     makeValidateAPICall(mEditValidate.getText().toString(),object1);
-    mSaveUrls();
+
 
 }
     }
@@ -456,7 +456,7 @@ if(!getRegisterStatus()) {
         SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
 // Creating an Editor object to edit(write to the file)
         SharedPreferences.Editor myEdit = sharedPreferences.edit();
-        Log.e("MADE API CALL","MADE API CALL FOR mSaveUrls :"+mEditReg.getText().toString() +" VALIDATE:"+mEditValidate.getText().toString());
+        Log.e("MADE API CALL","MADE API CALL FOR mSaveUrls REG: :"+mEditReg.getText().toString() +" VALIDATE:"+mEditValidate.getText().toString());
 // Storing the key and its value as the data fetched from edittext
         myEdit.putString("url_reg", mEditReg.getText().toString());
         myEdit.putString("url_validate", mEditValidate.getText().toString());
@@ -486,9 +486,9 @@ return s1;
     //validate API Method
     private void makeValidateAPICall(String url , JsonObject user) {
         mcardview.setVisibility(View.VISIBLE);
-        //storeRegisterStatus(false);
-        Log.e("Register INV","Register INV called Validate 2:"+user);
-Toast.makeText(getApplicationContext(),"Validate API called",Toast.LENGTH_SHORT).show();
+
+        Log.e("Register ","makeValidateAPICall url main:"+url);
+Toast.makeText(getApplicationContext(),"Validate API called"+url,Toast.LENGTH_SHORT).show();
         Log.e("MADE API CALL","MADE API CALL FOR VALIDATE :"+user);
        // User mUser = new User(user);
 
@@ -502,11 +502,13 @@ Toast.makeText(getApplicationContext(),"Validate API called",Toast.LENGTH_SHORT)
                 if(response.code() == 200){
                     validateLayout.setVisibility(View.VISIBLE);
                     mRegisterLayout.setVisibility(View.GONE);
+                    storeRegisterStatus(true);
                     //sendRegisterData();
                     Toast.makeText(getApplicationContext(),"SUCCESS ",Toast.LENGTH_SHORT).show();
                 }else if(response.code() ==103){
                     validateLayout.setVisibility(View.GONE);
                     mRegisterLayout.setVisibility(View.VISIBLE);
+                    storeRegisterStatus(false);
                     Toast.makeText(getApplicationContext(),"Register the Device",Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(getApplicationContext(),"FAILURE",Toast.LENGTH_SHORT).show();
@@ -519,7 +521,7 @@ Toast.makeText(getApplicationContext(),"Validate API called",Toast.LENGTH_SHORT)
                 Log.e("HASHED DATA","HASHED DATA ERROR:"+call);
                 Log.e("Register INV","Register INV called Validate ERROR ");
                 mcardview.setVisibility(View.INVISIBLE);
-              /*  validateLayout.setVisibility(View.GONE);
+           /* validateLayout.setVisibility(View.GONE);
                 mRegisterLayout.setVisibility(View.VISIBLE);*/
                 Toast.makeText(getApplicationContext(),"Validated Device failed"+user.toString(),Toast.LENGTH_SHORT).show();
           // sendRegisterData();
@@ -533,8 +535,8 @@ Toast.makeText(getApplicationContext(),"Validate API called",Toast.LENGTH_SHORT)
 //Register API call Method.
     private void makeRegisterCall(String url , RegisterUser user) {
         //
-        Log.e("Register","Register called 4 ");
-
+        Log.e("Register","makeRegisterCall main: "+url);
+        Toast.makeText(getApplicationContext(), "Register makeRegisterCall "+url, Toast.LENGTH_SHORT).show();
         mcardview.setVisibility(View.VISIBLE);
         JsonObject object = new JsonObject();
 Toast.makeText(getApplicationContext(),"Called Register",Toast.LENGTH_SHORT).show();
@@ -544,15 +546,14 @@ Toast.makeText(getApplicationContext(),"Called Register",Toast.LENGTH_SHORT).sho
         Log.e("HASHED DATA","RegisterUser after conc :"+object.toString());
         Log.e("Register","Register called 5 ");
 
-        Log.e("MADE API CALL","MADE API CALL FOR REGISTER :"+object);
-        Call<RegisterUser> call1 = apiInterface.register(url , object);
+        Log.e("MADE API CALL","MADE API CALL FOR REGISTER :"+getRegUrlData());
+        Call<RegisterUser> call1 = apiInterface.register(getRegUrlData() , object);
         call1.enqueue(new Callback<RegisterUser>() {
             @Override
             public void onResponse(Call<RegisterUser> call, Response<RegisterUser> response) {
                 RegisterUser user1 = response.body();
                 Log.e("Register","Register called 6 ");
-                if(response.code() == 200) {
-                    Toast.makeText(getApplicationContext(), "Register Successfully ", Toast.LENGTH_SHORT).show();
+                if(response.code() == 200 || response.code() == 208) {
                     storeRegisterStatus(true);
                     validateLayout.setVisibility(View.VISIBLE);
                     mRegisterLayout.setVisibility(View.GONE);
@@ -574,8 +575,8 @@ Toast.makeText(getApplicationContext(),"Called Register",Toast.LENGTH_SHORT).sho
             public void onFailure(Call<RegisterUser> call, Throwable t) {  Toast.makeText(getApplicationContext(), "  Failed to send"+t.getMessage().toString() , Toast.LENGTH_SHORT).show();
                 Log.e("HASHED DATA","HASHED DATA ERROR:"+call);
                 mcardview.setVisibility(View.INVISIBLE);
-                storeRegisterStatus(false);
-               /* validateLayout.setVisibility(View.VISIBLE);
+            /*    storeRegisterStatus(true);
+             validateLayout.setVisibility(View.VISIBLE);
                 mRegisterLayout.setVisibility(View.GONE);*/
                 Log.e("Register","Register called 7 just making it as try ");
                 call.cancel();
